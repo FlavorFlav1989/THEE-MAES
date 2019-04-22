@@ -13,13 +13,13 @@ public class Main extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("Sample.fxml"));
-			Scene scene = new Scene(root,700,500);
+			Scene scene = new Scene(root,850,650);
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setMaxHeight(500);
-			primaryStage.setMinHeight(500);
+			primaryStage.setMaxHeight(750);
+			primaryStage.setMinHeight(650);
 			
-			primaryStage.setMaxWidth(700);
-			primaryStage.setMinWidth(700);
+			primaryStage.setMaxWidth(1250);
+			primaryStage.setMinWidth(850);
 			primaryStage.setScene(scene);
 			primaryStage.show();
 		} catch(Exception e) {

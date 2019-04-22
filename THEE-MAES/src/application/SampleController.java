@@ -79,13 +79,13 @@ public class SampleController {
 	 }	 
 	 private void init_nb_value_list(){
 		 
-		 ObservableList<Integer> list = FXCollections.observableArrayList(10, 100, 500, 1000, 10000);
+		 ObservableList<Integer> list = FXCollections.observableArrayList(10, 100, 500, 1000, 10000, 50000);
 		 nb_value.setItems(list);
 		 nb_value.getSelectionModel().select(1);
 	 }
 	 
 	 private void init_nb_classe_list(){
-		 ObservableList<Integer> list = FXCollections.observableArrayList(5, 10, 20, 25);
+		 ObservableList<Integer> list = FXCollections.observableArrayList(5, 10, 20, 25, 50);
 		 nb_classe.setItems(list);
 		 nb_classe.getSelectionModel().select(0);
 	 }
@@ -111,13 +111,7 @@ public class SampleController {
 			gen.getDistribution(null, null);
 			double[][] rep_class = gen.repartir_class();
 			
-		    
-		    for(int i = 0; i < rep_class.length; i++){
-		       	series1.getData().add(new XYChart.Data((i+1)+"", gen.compte_valeur(rep_class[i])));
-		    }
-		    series1.setName("Répartition réel");
-		    bc.getData().add(series1);
-		    write_moy_ecart();
+			tracer_courbe(rep_class);
 		}
 		
 	}
@@ -141,14 +135,8 @@ public class SampleController {
 			gen = new Generatrice(nb, classe, TypeDistribution.EXPONENTIELLE);
 			gen.getDistribution(par1, null);
 			double[][] rep_class = gen.repartir_class();
-			
-		    
-		    for(int i = 0; i < rep_class.length; i++){
-		       	series1.getData().add(new XYChart.Data((i+1)+"", gen.compte_valeur(rep_class[i])));
-		    }
-		    series1.setName("Répartition réel");
-		    bc.getData().add(series1);
-		    write_moy_ecart();
+					    
+			tracer_courbe(rep_class);
 		}
 	}
 	
@@ -169,13 +157,7 @@ public class SampleController {
 			gen.getDistribution(par1, null);
 			double[][] rep_class = gen.repartir_class();
 			
-		    
-		    for(int i = 0; i < rep_class.length; i++){
-		       	series1.getData().add(new XYChart.Data((i+1)+"", gen.compte_valeur(rep_class[i])));
-		    }
-		    series1.setName("Répartition réel");
-		    bc.getData().add(series1);
-		    write_moy_ecart();
+		    tracer_courbe(rep_class);
 		}
 	}
 	
@@ -185,7 +167,7 @@ public class SampleController {
 		int classe = get_nb_classe();
 		double par1 = get_param_1();
 		double par2 = get_param_2();
-		XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
+		
 		if(nb == 0){
 			display_popup("Le nombre de valeurs est invalide");
 		}
@@ -200,13 +182,8 @@ public class SampleController {
 			gen.getDistribution(par1, par2);
 			double[][] rep_class = gen.repartir_class();
 			
+			tracer_courbe(rep_class);
 		    
-		    for(int i = 0; i < rep_class.length; i++){
-		       	series1.getData().add(new XYChart.Data((i+1)+"", gen.compte_valeur(rep_class[i])));
-		    }
-		    series1.setName("Répartition réel");
-		    bc.getData().add(series1);
-		    write_moy_ecart();
 		}
 	}
 	
@@ -216,6 +193,16 @@ public class SampleController {
 		}
 	}
 	
+	private void tracer_courbe(double[][] rep_class){
+		XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
+		
+		for(int i = 0; i < rep_class.length; i++){
+	       	series1.getData().add(new XYChart.Data((i+1)+"", gen.compte_valeur(rep_class[i])));
+	    }
+	    series1.setName("Répartition réel");
+	    bc.getData().add(series1);
+	    write_moy_ecart();
+	}
 	private int get_nb_value(){
 		if(nb_value.getSelectionModel().getSelectedItem() == null) return 0;
 		return Integer.parseInt(nb_value.getSelectionModel().getSelectedItem().toString());

@@ -80,7 +80,25 @@ public class Generatrice {
             }
         	k = 0;
         }
+        reduce_class();
         return classes;
+    }
+    
+    private void reduce_class(){
+    	for(int i = classes.length-1 ; i > 0 ; i--){
+    		if(compte_valeur(classes[i]) < 5){
+    			migrer_valeur(i, i--, compte_valeur(classes[i]));
+    		}
+    	}
+    }
+    
+    private void migrer_valeur(int index_out, int index_in, int nb_value){
+    	int index_to_insert = compte_valeur(classes[index_in]);
+    	for(int i = 0; i < nb_value; i++){
+    		classes[index_in][index_to_insert] = classes[index_out][i];
+    		classes[index_out][i] = 0;
+    		index_to_insert++;
+    	}
     }
 
     public void tri(){
