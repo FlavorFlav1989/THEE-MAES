@@ -35,6 +35,9 @@ public class SampleController {
 	 
 	 @FXML
 	 ComboBox<Integer> nb_value = new ComboBox<Integer>();
+	 
+	 @FXML
+	 ComboBox<Integer> nb_classe = new ComboBox<Integer>();
 
 	 @FXML
 	 TextField param_1 = new TextField();
@@ -67,7 +70,8 @@ public class SampleController {
 	 public void initialize(){
 	    
 		init_nb_value_list();
-		xAxis.setLabel("Class");
+		init_nb_classe_list();
+		xAxis.setLabel("Classes");
 	    xAxis.setTickLabelRotation(90);
 	    yAxis.setLabel("Densité");
 
@@ -80,21 +84,36 @@ public class SampleController {
 		 nb_value.getSelectionModel().select(1);
 	 }
 	 
+	 private void init_nb_classe_list(){
+		 ObservableList<Integer> list = FXCollections.observableArrayList(5, 10, 20, 25);
+		 nb_classe.setItems(list);
+		 nb_classe.getSelectionModel().select(0);
+	 }
+	 
+	 public void onSelectNb(ActionEvent e){
+		 if(get_nb_value() == 10){
+			 if(get_nb_classe() > 10){
+				 display_popup("Le nombre de classes ne peut etre supérieur au nombre de valeurs");
+				 nb_classe.getSelectionModel().select(1);
+			 }
+		 }
+	 }
 	public void clickOnUni(ActionEvent e){
 		clear_chart();
 		int nb = get_nb_value();
+		int classe = get_nb_classe();
 		XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
 		if(nb == 0){
 			display_popup("Le nombre de valeurs est invalide");
 		}
 		else{
-			gen = new Generatrice(nb, 10, TypeDistribution.UNIFORME);
+			gen = new Generatrice(nb, classe, TypeDistribution.UNIFORME);
 			gen.getDistribution(null, null);
 			double[][] rep_class = gen.repartir_class();
 			
 		    
 		    for(int i = 0; i < rep_class.length; i++){
-		       	series1.getData().add(new XYChart.Data(i+"", gen.compte_valeur(rep_class[i])));
+		       	series1.getData().add(new XYChart.Data((i+1)+"", gen.compte_valeur(rep_class[i])));
 		    }
 		    series1.setName("Répartition réel");
 		    bc.getData().add(series1);
@@ -106,6 +125,7 @@ public class SampleController {
 	public void clickOnExpo(ActionEvent e){
 		clear_chart();
 		int nb = get_nb_value();
+		int classe = get_nb_classe();
 		double par1 = get_param_1();
 		XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
 		if(nb == 0){
@@ -118,13 +138,13 @@ public class SampleController {
 			display_popup("Le parametre 1 ne peut pas être égal à 0");
 		}
 		else{
-			gen = new Generatrice(nb, 20, TypeDistribution.EXPONENTIELLE);
+			gen = new Generatrice(nb, classe, TypeDistribution.EXPONENTIELLE);
 			gen.getDistribution(par1, null);
 			double[][] rep_class = gen.repartir_class();
 			
 		    
 		    for(int i = 0; i < rep_class.length; i++){
-		       	series1.getData().add(new XYChart.Data(i+"", gen.compte_valeur(rep_class[i])));
+		       	series1.getData().add(new XYChart.Data((i+1)+"", gen.compte_valeur(rep_class[i])));
 		    }
 		    series1.setName("Répartition réel");
 		    bc.getData().add(series1);
@@ -135,6 +155,7 @@ public class SampleController {
 	public void clickOnPoiss(ActionEvent e){
 		clear_chart();
 		int nb = get_nb_value();
+		int classe = get_nb_classe();
 		double par1 = get_param_1();
 		double par2 = get_param_2();
 		XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
@@ -148,13 +169,13 @@ public class SampleController {
 			display_popup("Le parametre 2 doit avoir une valeur");
 		}
 		else{
-			gen = new Generatrice(nb, 10, TypeDistribution.POISSON);
+			gen = new Generatrice(nb, classe, TypeDistribution.POISSON);
 			gen.getDistribution(par1, par2);
 			double[][] rep_class = gen.repartir_class();
 			
 		    
 		    for(int i = 0; i < rep_class.length; i++){
-		       	series1.getData().add(new XYChart.Data(i+"", gen.compte_valeur(rep_class[i])));
+		       	series1.getData().add(new XYChart.Data((i+1)+"", gen.compte_valeur(rep_class[i])));
 		    }
 		    series1.setName("Répartition réel");
 		    bc.getData().add(series1);
@@ -165,6 +186,7 @@ public class SampleController {
 	public void clickOnNorm(ActionEvent e){
 		clear_chart();
 		int nb = get_nb_value();
+		int classe = get_nb_classe();
 		double par1 = get_param_1();
 		double par2 = get_param_2();
 		XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
@@ -178,13 +200,13 @@ public class SampleController {
 			display_popup("Le parametre 2 doit avoir une valeur");
 		}
 		else{
-			gen = new Generatrice(nb, 10, TypeDistribution.NORMALE);
+			gen = new Generatrice(nb, classe, TypeDistribution.NORMALE);
 			gen.getDistribution(par1, par2);
 			double[][] rep_class = gen.repartir_class();
 			
 		    
 		    for(int i = 0; i < rep_class.length; i++){
-		       	series1.getData().add(new XYChart.Data(i+"", gen.compte_valeur(rep_class[i])));
+		       	series1.getData().add(new XYChart.Data((i+1)+"", gen.compte_valeur(rep_class[i])));
 		    }
 		    series1.setName("Répartition réel");
 		    bc.getData().add(series1);
@@ -201,6 +223,11 @@ public class SampleController {
 	private int get_nb_value(){
 		if(nb_value.getSelectionModel().getSelectedItem() == null) return 0;
 		return Integer.parseInt(nb_value.getSelectionModel().getSelectedItem().toString());
+	}
+	
+	private int get_nb_classe(){
+		if(nb_classe.getSelectionModel().getSelectedItem() == null) return 0;
+		return Integer.parseInt(nb_classe.getSelectionModel().getSelectedItem().toString());
 	}
 	
 	private double get_param_1(){

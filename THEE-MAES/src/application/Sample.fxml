@@ -20,7 +20,7 @@
                 <VBox alignment="CENTER" prefHeight="45.0" prefWidth="133.0">
                   <children>
                     <Label text="Nombre valeurs" />
-                    <ComboBox fx:id="nb_value">
+                    <ComboBox fx:id="nb_value" onAction="#onSelectNb">
                       <items>
                         <FXCollections fx:factory="observableArrayList">
                           <String fx:value="Item 1" />
@@ -33,6 +33,20 @@
                   <HBox.margin>
                     <Insets right="10.0" fx:id="x1" />
                   </HBox.margin>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="45.0" prefWidth="133.0">
+                  <children>
+                    <Label text="Nombre classes" />
+                    <ComboBox id="nb_value" fx:id="nb_classe" onAction="#onSelectNb">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                  </children>
                 </VBox>
                 <VBox alignment="CENTER" prefHeight="45.0" prefWidth="126.0" HBox.margin="$x1">
                   <children>
