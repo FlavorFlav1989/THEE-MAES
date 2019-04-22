@@ -1,7 +1,6 @@
 package model;
 
-public class Uniforme {
-
+public class Normale {
 	public static double next_random(){
 		return Math.random();
 	}
