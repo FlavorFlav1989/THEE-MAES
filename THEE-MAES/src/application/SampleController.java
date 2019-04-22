@@ -157,7 +157,6 @@ public class SampleController {
 		int nb = get_nb_value();
 		int classe = get_nb_classe();
 		double par1 = get_param_1();
-		double par2 = get_param_2();
 		XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
 		if(nb == 0){
 			display_popup("Le nombre de valeurs est invalide");
@@ -165,12 +164,9 @@ public class SampleController {
 		else if(par1 == -1.0){
 			display_popup("Le parametre 1 doit avoir une valeur");
 		}
-		else if(par2 == -1.0){
-			display_popup("Le parametre 2 doit avoir une valeur");
-		}
 		else{
 			gen = new Generatrice(nb, classe, TypeDistribution.POISSON);
-			gen.getDistribution(par1, par2);
+			gen.getDistribution(par1, null);
 			double[][] rep_class = gen.repartir_class();
 			
 		    

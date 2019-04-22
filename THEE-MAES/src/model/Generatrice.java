@@ -8,7 +8,7 @@ public class Generatrice {
     private TypeDistribution distrib;
     private double param1;
     private double param2;
-    
+    private double val_max;
     public Generatrice(int n, int nb_class, TypeDistribution distrib){
         echantillon = new double[n];
         classes = new double[nb_class][n];
@@ -20,7 +20,7 @@ public class Generatrice {
     public double[] getDistribution(Double alpha, Double beta){
     	switch(distrib){
 	    	case UNIFORME : return uniforme();
-	    	case POISSON : return poisson();
+	    	case POISSON : return poisson(alpha);
 	    	case EXPONENTIELLE : return exponentielle(alpha);
 	    	case NORMALE : return normale(alpha, beta);
 	    	default : return null;
@@ -35,9 +35,10 @@ public class Generatrice {
         return echantillon;
     }
     
-    private double[] poisson(){
+    private double[] poisson(double alpha){
+    	this.param1 = alpha;
         for(int i = 0; i < nb_value; i++){
-            echantillon[i] = Uniforme.next_random();
+            echantillon[i] = Poisson.next_random(alpha, i);
         }
         tri();
         return echantillon;
@@ -66,13 +67,13 @@ public class Generatrice {
     	int k = 0;
         for(int i = 1; i <= nb_class; i++){
         	/*Borne supérieur de la classe*/
-        	double max_class = i * (1.0/(double)nb_class);
+        	double max_class = i * (val_max/(double)nb_class);
         	/*Borne inféireur de la classe*/
-        	double min_class = (i == 1 ? 0 : ((i-1) * (1.0/(double)nb_class)));
+        	double min_class = (i == 1 ? 0 : ((i-1) * (val_max/(double)nb_class)));
         	System.out.println("max_class : " + max_class);
         	System.out.println("min_class : " + min_class);
         	for(int j = 0; j < nb_value; j++){
-        		if(echantillon[j] < max_class && echantillon[j] > min_class){
+        		if(echantillon[j] <= max_class && echantillon[j] > min_class){
         			classes[i-1][k] = echantillon[j];
         			k++;
         		}
@@ -92,6 +93,7 @@ public class Generatrice {
         		}
         	}
         }
+        val_max = echantillon[nb_value-1];
     }
 
     public void affiche_echantilon(){
@@ -124,9 +126,9 @@ public class Generatrice {
     public double variance(){
     	switch(distrib){
     	case UNIFORME : return Uniforme.variance(echantillon);
-    	case POISSON : return Poisson.variance(echantillon);
+    	case POISSON : return Poisson.variance(this.param1);
     	case EXPONENTIELLE : return Exponentielle.variance(this.param1);
-    	case NORMALE : return Normale.variance(echantillon);
+    	case NORMALE : return Normale.variance(this.param2);
     	default : return 0;
     	}
     }
