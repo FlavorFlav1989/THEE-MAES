@@ -22,7 +22,7 @@ public class Generatrice {
 	    	case UNIFORME : return uniforme();
 	    	case POISSON : return poisson();
 	    	case EXPONENTIELLE : return exponentielle(alpha);
-	    	case NORMALE : return normale();
+	    	case NORMALE : return normale(alpha, beta);
 	    	default : return null;
     	}
     }
@@ -46,15 +46,17 @@ public class Generatrice {
     private double[] exponentielle(double alpha){
     	this.param1 = alpha;
         for(int i = 0; i < nb_value; i++){
-            echantillon[i] = Exponentielle.next_random(this.param1);
+            echantillon[i] = Exponentielle.next_random(alpha);
         }
         tri();
         return echantillon;
     }
     
-    private double[] normale(){
-        for(int i = 0; i < nb_value; i++){
-            echantillon[i] = Uniforme.next_random();
+    private double[] normale(double alpha, double beta){
+    	this.param1 = alpha;
+    	this.param2 = beta;
+    	for(int i = 0; i < nb_value; i++){
+            echantillon[i] = Normale.next_random(alpha, beta)+0.5;
         }
         tri();
         return echantillon;
@@ -119,7 +121,7 @@ public class Generatrice {
     	}
     }
 
-    public double variance_uniforme(){
+    public double variance(){
     	switch(distrib){
     	case UNIFORME : return Uniforme.variance(echantillon);
     	case POISSON : return Poisson.variance(echantillon);
@@ -144,7 +146,7 @@ public class Generatrice {
     	return q;
     }
     
-    private int compte_valeur(double tab[]){
+    public int compte_valeur(double tab[]){
     	int i = 0;
     	for(i = 0; i < tab.length; i++){
     		if(tab[i] == 0)break;

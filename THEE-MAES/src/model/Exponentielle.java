@@ -3,8 +3,12 @@ package model;
 public class Exponentielle {
 	
 	public static double next_random(double alpha){
-		System.out.println("Random : " + (alpha * Math.exp(-alpha * Math.random())));
-		return (alpha * Math.exp(-alpha * Math.random()));
+		System.out.println("Random : " + (-(Math.log(Math.random())/(alpha))));
+		double val = -(Math.log(Math.random())/(alpha));
+		while(val > 1){
+			val = -(Math.log(Math.random())/(alpha));
+		}
+		return val;
 	}
 	
 	public static double moyenne(double[] tab){

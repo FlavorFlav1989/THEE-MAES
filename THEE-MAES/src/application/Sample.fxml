@@ -1,7 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-	
+
+<?import java.lang.*?>
+<?import javafx.collections.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
-	
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SampleController">
-	<!-- TODO Add Nodes -->
+
+<BorderPane prefHeight="396.0" prefWidth="588.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/2.2" fx:controller="application.SampleController">
+  <!-- TODO Add Nodes -->
+  <center>
+    <VBox prefHeight="200.0" prefWidth="100.0">
+      <children>
+        <VBox prefHeight="200.0" prefWidth="100.0">
+          <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+              <children>
+                <VBox alignment="CENTER" prefHeight="45.0" prefWidth="133.0">
+                  <children>
+                    <Label text="Nombre valeurs" />
+                    <ComboBox fx:id="nb_value">
+                      <items>
+                        <FXCollections fx:factory="observableArrayList">
+                          <String fx:value="Item 1" />
+                          <String fx:value="Item 2" />
+                          <String fx:value="Item 3" />
+                        </FXCollections>
+                      </items>
+                    </ComboBox>
+                  </children>
+                  <HBox.margin>
+                    <Insets right="10.0" fx:id="x1" />
+                  </HBox.margin>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="45.0" prefWidth="126.0" HBox.margin="$x1">
+                  <children>
+                    <Label text="Parametre 1" />
+                    <TextField fx:id="param_1" prefWidth="200.0" />
+                  </children>
+                </VBox>
+                <VBox alignment="CENTER" prefHeight="45.0" prefWidth="126.0">
+                  <children>
+                    <Label text="Parametre 2" />
+                    <TextField fx:id="param_2" prefWidth="200.0" />
+                  </children>
+                </VBox>
+              </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+              <children>
+                <Button fx:id="click_uni" mnemonicParsing="false" onAction="#clickOnUni" text="Uniforme" HBox.margin="$x1" />
+                <Button fx:id="click_expo" mnemonicParsing="false" onAction="#clickOnExpo" text="Exponentielle" HBox.margin="$x1" />
+                <Button fx:id="click_poiss" mnemonicParsing="false" onAction="#clickOnPoiss" text="Poisson" HBox.margin="$x1" />
+                <Button fx:id="click_norm" mnemonicParsing="false" onAction="#clickOnNorm" text="Normale" HBox.margin="$x1" />
+                <Button id="click_norm" mnemonicParsing="false" onAction="#clickOnKi2" text="KI²" />
+              </children>
+              <VBox.margin>
+                <Insets bottom="7.0" top="7.0" />
+              </VBox.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+              <children>
+                <Label text="Moyenne :" />
+                <TextField fx:id="moyenne" disable="true" editable="false" opacity="0.85" prefWidth="75.0" HBox.margin="$x1" />
+                <Label text="Ecart type :" />
+                <TextField fx:id="ecart" disable="true" editable="false" opacity="0.85" prefWidth="75.0" HBox.margin="$x1" />
+                <Label text="Ki² :" />
+                <TextField fx:id="ki2" disable="true" editable="false" opacity="0.85" prefWidth="75.0" />
+              </children>
+              <VBox.margin>
+                <Insets bottom="7.0" />
+              </VBox.margin>
+            </HBox>
+          </children>
+        </VBox>
+        <BarChart fx:id="bc">
+          <xAxis>
+            <CategoryAxis fx:id="xAxis" side="BOTTOM" />
+          </xAxis>
+          <yAxis>
+            <NumberAxis fx:id="yAxis" side="LEFT" />
+          </yAxis>
+        </BarChart>
+      </children>
+    </VBox>
+  </center>
 </BorderPane>
