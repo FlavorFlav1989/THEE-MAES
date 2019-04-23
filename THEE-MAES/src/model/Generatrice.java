@@ -160,7 +160,8 @@ public class Generatrice {
     		System.out.println("Classe : " + i + ", Théorique : " + classes_theorique + ", Réel : " + classes_reel);
     		double classes_reel_conv = (double) classes_reel;
     		double classes_theorique_conv = (double) classes_theorique;
-    		q += (((classes_reel_conv - classes_theorique_conv) * (classes_reel_conv - classes_theorique_conv)) / classes_theorique_conv);
+    		if(classes_reel_conv != 0.0)
+    			q += (((classes_reel_conv - classes_theorique_conv) * (classes_reel_conv - classes_theorique_conv)) / classes_theorique_conv);
     	}
     	System.out.println("Q = " + q);
     	return q;
@@ -173,5 +174,33 @@ public class Generatrice {
     	}
     	return i;
     }
+
+	/**
+	 * @return the nb_value
+	 */
+	public int getNb_value() {
+		return nb_value;
+	}
+
+	/**
+	 * @param nb_value the nb_value to set
+	 */
+	public void setNb_value(int nb_value) {
+		this.nb_value = nb_value;
+	}
+
+	/**
+	 * @return the nb_class
+	 */
+	public int getNb_class() {
+		return nb_class;
+	}
+
+	/**
+	 * @param nb_class the nb_class to set
+	 */
+	public void setNb_class(int nb_class) {
+		this.nb_class = nb_class;
+	}
 
 }

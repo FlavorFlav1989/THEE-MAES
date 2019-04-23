@@ -79,7 +79,7 @@ public class SampleController {
 	 }	 
 	 private void init_nb_value_list(){
 		 
-		 ObservableList<Integer> list = FXCollections.observableArrayList(10, 100, 500, 1000, 10000, 50000);
+		 ObservableList<Integer> list = FXCollections.observableArrayList(100, 500, 1000, 10000, 50000);
 		 nb_value.setItems(list);
 		 nb_value.getSelectionModel().select(1);
 	 }
@@ -195,9 +195,13 @@ public class SampleController {
 	
 	private void tracer_courbe(double[][] rep_class){
 		XYChart.Series<String, Number> series1 = new XYChart.Series<String, Number>();
-		
+		int diff = 0;
 		for(int i = 0; i < rep_class.length; i++){
-	       	series1.getData().add(new XYChart.Data((i+1)+"", gen.compte_valeur(rep_class[i])));
+			if(gen.compte_valeur(rep_class[i]) < 5)
+				diff++;
+			else
+				series1.getData().add(new XYChart.Data((i+1-diff)+"", (gen.compte_valeur(rep_class[i]) )));
+			series1.setName(gen.compte_valeur(rep_class[i])+"");
 	    }
 	    series1.setName("Répartition réel");
 	    bc.getData().add(series1);
